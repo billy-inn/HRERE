@@ -218,11 +218,11 @@ def parse_args(parser):
 
 def main(options):
     if options.preprocess:
-        preprocess(config.RAW_TRAIN_DATA, config.TYPED_TRAIN_DATA)
-        preprocess(config.RAW_TEST_DATA, config.TYPED_TEST_DATA, True)
+        preprocess(config.RAW_TRAIN_DATA, config.CLEAN_TRAIN_DATA)
+        preprocess(config.RAW_TEST_DATA, config.CLEAN_TEST_DATA, True)
     if options.group:
-        group(config.TYPED_TRAIN_DATA, config.GROUPED_TRAIN_DATA, options.sample)
-        create_test_set(config.TYPED_TEST_DATA, config.GROUPED_TEST_DATA, options.sample)
+        group(config.CLEAN_TRAIN_DATA, config.GROUPED_TRAIN_DATA, options.sample)
+        create_test_set(config.CLEAN_TEST_DATA, config.GROUPED_TEST_DATA, options.sample)
 
 if __name__ == "__main__":
     parser = OptionParser()

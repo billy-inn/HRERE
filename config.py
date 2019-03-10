@@ -13,12 +13,10 @@ PLOT_FIG_DIR = "%s/figure" % PLOT_DIR
 # ---------------------- DATA ----------------------
 RAW_TRAIN_DATA = "%s/train.txt" % DATA_PATH
 CLEAN_TRAIN_DATA = "%s/train.tsv" % DATA_PATH
-TYPED_TRAIN_DATA = "%s/typed_train.tsv" % DATA_PATH
 GROUPED_TRAIN_DATA = "%s/grouped_train.pkl" % DATA_PATH
 
 RAW_TEST_DATA = "%s/test.txt" % DATA_PATH
 CLEAN_TEST_DATA = "%s/test.tsv" % DATA_PATH
-TYPED_TEST_DATA = "%s/typed_test.tsv" % DATA_PATH
 GROUPED_TEST_DATA = "%s/grouped_test.pkl" % DATA_PATH
 
 EMBEDDING_DATA = "%s/glove.840B.300d.txt" % DATA_PATH

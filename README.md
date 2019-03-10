@@ -4,6 +4,18 @@ Connecting Language and Knowledge with Heterogeneous Representations for Neural 
 
 Paper Published in NAACL 2019: [NFETC](https://arxiv.org/abs/1803.03378)
 
+### Prerequisites
+
+### Dataset
+
+### Preprocessing
+
+```
+python preprocess.py -p -g
+```
+
+###
+
 ### Cite
 
 If you found this codebase or our work useful, please cite:
