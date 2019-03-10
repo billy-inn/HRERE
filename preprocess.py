@@ -112,7 +112,7 @@ def preprocess(raw_data, clean_data, if_test=False):
 
     df.r = df.r.map(transform)
     df.r = df.r.map(lambda x: r2id.get(x, 0)).astype(int)
-    print(df.r.value_counts())
+    # print(df.r.value_counts())
 
     df[["r", "e1", "x1", "y1", "e2", "x2", "y2", "s"]].to_csv(clean_data,
             sep="\t", index=False, header=False)
@@ -218,10 +218,14 @@ def parse_args(parser):
 
 def main(options):
     if options.preprocess:
+        print("Preprocessing training data...")
         preprocess(config.RAW_TRAIN_DATA, config.CLEAN_TRAIN_DATA)
+        print("Preprocessing test data...")
         preprocess(config.RAW_TEST_DATA, config.CLEAN_TEST_DATA, True)
     if options.group:
+        print("Grouping training data...")
         group(config.CLEAN_TRAIN_DATA, config.GROUPED_TRAIN_DATA, options.sample)
+        print("Grouping test data...")
         create_test_set(config.CLEAN_TEST_DATA, config.GROUPED_TEST_DATA, options.sample)
 
 if __name__ == "__main__":
