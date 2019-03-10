@@ -2,6 +2,7 @@
 # ---------------------- PATH ----------------------
 ROOT_PATH = "."
 DATA_PATH = "%s/data" % ROOT_PATH
+KG_PATH = "%s/kg" % ROOT_PATH
 
 CHECKPOINT_DIR = "%s/checkpoint" % ROOT_PATH
 LOG_DIR = "%s/log" % ROOT_PATH
@@ -42,4 +43,4 @@ NUM_RELATION = 55
 
 BAG_SIZE = 5
 
-RANDOM_SEED = 2017
+RANDOM_SEED = 2019

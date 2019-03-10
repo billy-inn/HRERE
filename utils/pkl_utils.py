@@ -1,6 +1,6 @@
 import pickle
 
-def _save(fname, data, protocol=-1):
+def _save(fname, data, protocol=4):
     with open(fname, "wb") as f:
         pickle.dump(data, f, protocol)
 
