@@ -63,6 +63,8 @@ def main():
 
     def check(x):
         return (x.a1, x.r, x.a2) not in tFact
+
+    print("Constructing KG for embedding training...")
     mask = df_fb.apply(check, axis=1)
     df = df_fb[mask].reset_index(drop=True)
     n = df.shape[0]
@@ -72,6 +74,8 @@ def main():
     df_train = df.iloc[train_idx]
     df_valid = df.iloc[valid_idx]
     df_test = df_fb[~mask]
+
+    print("Saving to %s" % config.KG_PATH)
     if not os.path.exists(config.KG_PATH):
         os.makedirs(config.KG_PATH)
     df_train.to_csv(config.KG_PATH + "/train.txt", sep="\t", header=False, index=False)

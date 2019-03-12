@@ -6,15 +6,32 @@ Paper Published in NAACL 2019: [NFETC](https://arxiv.org/abs/1803.03378)
 
 ### Prerequisites
 
+- tensorflow >= r1.2
+- hyperopt
+- gensim
+- sklearn
+
 ### Dataset
 
 ### Preprocessing
+
+Construct the knowledge graph:
+
+```
+python create_kg.py
+```
+
+Preprocessing the data:
 
 ```
 python preprocess.py -p -g
 ```
 
-###
+### Complex Embeddings
+
+### Hyperparameters Tuning
+
+### Evaluation
 
 ### Cite
 
