@@ -304,7 +304,7 @@ class TaskOptimizer:
 
 
 def parse_args(parser):
-    parser.add_option("-m", "--model", type="string", dest="model_name", default="multi_bilstm")
+    parser.add_option("-m", "--model", type="string", dest="model_name", default="base")
     parser.add_option("-e", "--eval", type="int", dest="max_evals", default=100)
     parser.add_option("-c", "--cv", type="int", dest="cv_runs", default=3)
     options, args = parser.parse_args()
