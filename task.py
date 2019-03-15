@@ -21,8 +21,8 @@ class AttrDict(dict):
 class Task:
     def __init__(self, model_name, cv_runs, params_dict, logger):
         print("Loading data...")
-        words, positions, types, heads, tails, labels = pkl_utils._load(config.GROUPED_TRAIN_DATA)
-        words_test, positions_test, types_test, heads_test, tails_test, labels_test = pkl_utils._load(config.GROUPED_TEST_DATA) # noqa
+        words, positions, heads, tails, labels = pkl_utils._load(config.GROUPED_TRAIN_DATA)
+        words_test, positions_test, heads_test, tails_test, labels_test = pkl_utils._load(config.GROUPED_TEST_DATA) # noqa
 
         self.embedding = embedding_utils.Embedding(
             config.EMBEDDING_DATA,
@@ -35,27 +35,24 @@ class Task:
         textlen = np.array([[self.embedding.len_transform(x) for x in y] for y in words])
         words = np.array([[self.embedding.text_transform(x) for x in y] for y in words])
         positions = np.array([[self.embedding.position_transform(x) for x in y] for y in positions])
-        types = np.array([[[type2id[t1], type2id[t2]] for t1, t2 in y] for y in types])
 
         textlen_test = np.array([[self.embedding.len_transform(x) for x in y] for y in words_test])
         words_test = np.array([[self.embedding.text_transform(x) for x in y] for y in words_test])
         positions_test = np.array([[self.embedding.position_transform(x) for x in y] for y in positions_test]) # noqa
-        types_test = np.array([[[type2id[t1], type2id[t2]] for t1, t2 in y] for y in types_test])
 
         ss = ShuffleSplit(n_splits=1, test_size=0.1, random_state=config.RANDOM_SEED)
         for train_index, valid_index in ss.split(np.zeros(len(labels)), labels):
             words_train, words_valid = words[train_index], words[valid_index]
             textlen_train, textlen_valid = textlen[train_index], textlen[valid_index]
             positions_train, positions_valid = positions[train_index], positions[valid_index]
-            types_train, types_valid = types[train_index], types[valid_index]
             heads_train, heads_valid = heads[train_index], heads[valid_index]
             tails_train, tails_valid = tails[train_index], tails[valid_index]
             labels_train, labels_valid = labels[train_index], labels[valid_index]
-        if "kre" in model_name:
-            self.full_set = list(zip(words, textlen, positions, types, heads, tails, labels))
-            self.train_set = list(zip(words_train, textlen_train, positions_train, types_train, heads_train, tails_train, labels_train)) # noqa
-            self.valid_set = list(zip(words_valid, textlen_valid, positions_valid, types_valid, heads_valid, tails_valid, labels_valid)) # noqa
-            self.test_set = list(zip(words_test, textlen_test, positions_test, types_test, heads_test, tails_test, labels_test)) # noqa
+        if "hrere" in model_name:
+            self.full_set = list(zip(words, textlen, positions, heads, tails, labels))
+            self.train_set = list(zip(words_train, textlen_train, positions_train, heads_train, tails_train, labels_train)) # noqa
+            self.valid_set = list(zip(words_valid, textlen_valid, positions_valid, heads_valid, tails_valid, labels_valid)) # noqa
+            self.test_set = list(zip(words_test, textlen_test, positions_test, heads_test, tails_test, labels_test)) # noqa
             if "complex" in model_name:
                 self.entity_embedding1 = np.load(config.ENTITY_EMBEDDING1)
                 self.entity_embedding2 = np.load(config.ENTITY_EMBEDDING2)
@@ -65,10 +62,10 @@ class Task:
                 self.entity_embedding = np.load(config.ENTITY_EMBEDDING)
                 self.relation_embedding = np.load(config.RELATION_EMBEDDING)
         else:
-            self.full_set = list(zip(words, textlen, positions, types, labels))
-            self.train_set = list(zip(words_train, textlen_train, positions_train, types_train, labels_train)) # noqa
-            self.valid_set = list(zip(words_valid, textlen_valid, positions_valid, types_valid, labels_valid)) # noqa
-            self.test_set = list(zip(words_test, textlen_test, positions_test, types_test, labels_test)) # noqa
+            self.full_set = list(zip(words, textlen, positions, labels))
+            self.train_set = list(zip(words_train, textlen_train, positions_train, labels_train)) # noqa
+            self.valid_set = list(zip(words_valid, textlen_valid, positions_valid, labels_valid)) # noqa
+            self.test_set = list(zip(words_test, textlen_test, positions_test, labels_test)) # noqa
 
         self.model_name = model_name
         self.cv_runs = cv_runs
