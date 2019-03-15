@@ -9,9 +9,9 @@ import os
 import config
 import datetime
 import tensorflow as tf
-from bilstm import BiLSTM_PE, BiLSTM_IE
-from complex_kre import ComplexKRE
-from real_kre import RealKRE
+from bilstm import BiLSTM
+from complex_hrere import ComplexHRERE
+from real_hrere import RealHRERE
 
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
@@ -99,20 +99,17 @@ class Task:
             "hparams": self.hparams,
         }
         if "bilstm" in self.model_name:
-            if "ie" in self.model_name:
-                return BiLSTM_IE(**kwargs)
-            else:
-                return BiLSTM_PE(**kwargs)
-        elif "complex_kre" in self.model_name:
+            return BiLSTM(**kwargs)
+        elif "complex_hrere" in self.model_name:
             kwargs["entity_embedding1"] = self.entity_embedding1
             kwargs["entity_embedding2"] = self.entity_embedding2
             kwargs["relation_embedding1"] = self.relation_embedding1
             kwargs["relation_embedding2"] = self.relation_embedding2
-            return ComplexKRE(**kwargs)
-        elif "real_kre" in self.model_name:
+            return ComplexHRERE(**kwargs)
+        elif "real_hrere" in self.model_name:
             kwargs["entity_embedding"] = self.entity_embedding
             kwargs["relation_embedding"] = self.relation_embedding
-            return RealKRE(**kwargs)
+            return RealHRERE(**kwargs)
         else:
             raise AttributeError("Invalid model name!")
 
