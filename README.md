@@ -38,7 +38,20 @@ python get_embeddings.py --embed complex --model best_Complex_tanh_fb3m --output
 
 ### Hyperparameters Tuning
 
+```
+python task.py --model <model_name> --eval <max_number_of_search> --runs <number_of_runs_per_setting>
+```
+
+`model_name` can be found in `model_param_space.py`. You can define the search space by yourself.
+
 ### Evaluation
+
+```
+python eval.py --model <model_name> --prefix <file_prefix> --runs <number_of_runs> [--eval]
+```
+
+`model_name` can be found in `model_param_space.py`.
+Option `--eval` is used to save the data for plotting; otherwise, it'll run multiple times and calculate the means and stds of P@N. 
 
 ### Cite
 

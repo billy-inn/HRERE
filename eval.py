@@ -8,7 +8,7 @@ import datetime
 def parse_args(parser):
     parser.add_option("-m", "--model", dest="model_name", type="string")
     parser.add_option("-e", "--eval", dest="eval", default=False, action="store_true")
-    parser.add_option("-c", "--cv_runs", dest="cv_runs", default=3, type="int")
+    parser.add_option("-r", "--runs", dest="runs", default=3, type="int")
     parser.add_option("-p", "--prefix", dest="prefix", type="string", default="test")
 
     options, args = parser.parse_args()
@@ -24,7 +24,7 @@ def main(options):
         logname = "Final_[Model@%s]_%s.log" % (options.model_name, time_str)
         logger = logging_utils._get_logger(config.LOG_DIR, logname)
     params_dict = param_space_dict[options.model_name]
-    task = Task(options.model_name, options.cv_runs, params_dict, logger)
+    task = Task(options.model_name, options.runs, params_dict, logger)
     if options.eval:
         task.refit(options.prefix)
     else:

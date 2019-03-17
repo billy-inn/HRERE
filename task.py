@@ -19,7 +19,7 @@ class AttrDict(dict):
         self.__dict__ = self
 
 class Task:
-    def __init__(self, model_name, cv_runs, params_dict, logger):
+    def __init__(self, model_name, runs, params_dict, logger):
         print("Loading data...")
         words, positions, heads, tails, labels = pkl_utils._load(config.GROUPED_TRAIN_DATA)
         words_test, positions_test, heads_test, tails_test, labels_test = pkl_utils._load(config.GROUPED_TEST_DATA) # noqa
@@ -29,7 +29,6 @@ class Task:
             list([s for bags in words for s in bags]) +
             list([s for bags in words_test for s in bags]),
             config.MAX_DOCUMENT_LENGTH)
-        type2id, typeDict = pkl_utils._load(config.TYPE_INFO)
 
         print("Preprocessing data...")
         textlen = np.array([[self.embedding.len_transform(x) for x in y] for y in words])
@@ -68,7 +67,7 @@ class Task:
             self.test_set = list(zip(words_test, textlen_test, positions_test, labels_test)) # noqa
 
         self.model_name = model_name
-        self.cv_runs = cv_runs
+        self.runs = runs
         self.params_dict = params_dict
         self.hparams = AttrDict(params_dict)
         self.logger = logger
@@ -95,7 +94,7 @@ class Task:
             "wpe": np.random.random_sample((self.embedding.position_size, self.hparams.wpe_size)),
             "hparams": self.hparams,
         }
-        if "bilstm" in self.model_name:
+        if "base" in self.model_name:
             return BiLSTM(**kwargs)
         elif "complex_hrere" in self.model_name:
             kwargs["entity_embedding1"] = self.entity_embedding1
@@ -135,7 +134,7 @@ class Task:
         cv_loss = []
         cv_acc = []
         cv_ap = []
-        for i in range(self.cv_runs):
+        for i in range(self.runs):
             sess = self.create_session()
             sess.run(tf.global_variables_initializer())
             step, loss, acc, ap = self.model.fit(sess, self.train_set, self.valid_set)
@@ -182,6 +181,8 @@ class Task:
         p50 = cnt50 / 642 / 5
 
         if if_save:
+            if not os.path.exists(config.PLOT_OUT_DIR):
+                os.makedirs(config.PLOT_OUT_DIR)
             np.save(os.path.join(config.PLOT_OUT_DIR, prefix + "_labels.npy"), labels)
             np.save(os.path.join(config.PLOT_OUT_DIR, prefix + "_probs.npy"), probs)
         return average_precision, p10, p30, p50
@@ -222,7 +223,7 @@ class Task:
         p10s = []
         p30s = []
         p50s = []
-        for i in range(self.cv_runs):
+        for i in range(self.runs):
             sess = self.create_session()
             sess.run(tf.global_variables_initializer())
             self.model.fit(sess, self.full_set)
@@ -256,16 +257,16 @@ class Task:
 
 
 class TaskOptimizer:
-    def __init__(self, model_name, max_evals, cv_runs, logger):
+    def __init__(self, model_name, max_evals, runs, logger):
         self.model_name = model_name
         self.max_evals = max_evals
-        self.cv_runs = cv_runs
+        self.runs = runs
         self.logger = logger
         self.model_param_space = ModelParamSpace(self.model_name)
 
     def _obj(self, param_dict):
         param_dict = self.model_param_space._convert_into_param(param_dict)
-        self.task = Task(self.model_name, self.cv_runs, param_dict, self.logger)
+        self.task = Task(self.model_name, self.runs, param_dict, self.logger)
         self.task.cv()
         tf.reset_default_graph()
         ret = {
@@ -300,7 +301,7 @@ class TaskOptimizer:
 def parse_args(parser):
     parser.add_option("-m", "--model", type="string", dest="model_name", default="base")
     parser.add_option("-e", "--eval", type="int", dest="max_evals", default=100)
-    parser.add_option("-c", "--cv", type="int", dest="cv_runs", default=3)
+    parser.add_option("-r", "--runs", type="int", dest="runs", default=3)
     options, args = parser.parse_args()
     return options, args
 
@@ -309,7 +310,7 @@ def main(options):
     time_str = datetime.datetime.now().isoformat()
     logname = "[Model@%s]_%s.log" % (options.model_name, time_str)
     logger = logging_utils._get_logger(config.LOG_DIR, logname)
-    optimizer = TaskOptimizer(options.model_name, options.max_evals, options.cv_runs, logger)
+    optimizer = TaskOptimizer(options.model_name, options.max_evals, options.runs, logger)
     optimizer.run()
 
 
