@@ -13,6 +13,13 @@ Paper Published in NAACL 2019: [NFETC](https://arxiv.org/abs/1803.03378)
 
 ### Dataset
 
+To download the dataset used:
+
+```
+cd ./data
+python prepare_data.py
+```
+
 ### Preprocessing
 
 Construct the knowledge graph:
