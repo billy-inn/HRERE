@@ -1,7 +1,7 @@
 import config
 import numpy as np
 from utils.data_utils import load_dict_from_txt
-from optparser import OptionParser
+from optparse import OptionParser
 
 def real():
     entity = np.load(config.KG_PATH + "/entity.npy")
@@ -63,6 +63,8 @@ def complex():
 
 def parse_args(parser):
     parser.add_option("-e", "--emb_type", type="string", dest="emb_type", default="complex")
+    options, args = parser.parse_args()
+    return options, args
 
 def main(options):
     if options.emb_type == "complex":
