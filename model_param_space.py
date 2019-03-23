@@ -98,10 +98,10 @@ param_space_best_real = {
 param_space_dict = {
     "base": param_space_base,
     "best_base": param_space_best_base,
-    "complex": param_space_complex,
-    "best_complex": param_space_best_complex,
-    "real": param_space_real,
-    "best_real": param_space_best_real,
+    "complex_hrere": param_space_complex,
+    "best_complex_hrere": param_space_best_complex,
+    "real_hrere": param_space_real,
+    "best_real_hrere": param_space_best_real,
 }
 
 int_params = [

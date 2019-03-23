@@ -40,7 +40,13 @@ Copy the fils in `./kg` to the data folder in [tensorflow-efe](https://github.co
 
 ```
 python train.py --model best_Complex_tanh_fb3m --data fb3m --save
-python get_embeddings.py --embed complex --model best_Complex_tanh_fb3m --output <current_data_path>
+python get_embeddings.py --embed complex --model best_Complex_tanh_fb3m --output <repo_path>/kg
+```
+
+Then run the following command in the current path:
+
+```
+python get_embeddings.py 
 ```
 
 ### Hyperparameters Tuning

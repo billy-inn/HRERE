@@ -96,13 +96,13 @@ class Task:
         }
         if "base" in self.model_name:
             return BiLSTM(**kwargs)
-        elif "complex" in self.model_name:
+        elif "complex_hrere" in self.model_name:
             kwargs["entity_embedding1"] = self.entity_embedding1
             kwargs["entity_embedding2"] = self.entity_embedding2
             kwargs["relation_embedding1"] = self.relation_embedding1
             kwargs["relation_embedding2"] = self.relation_embedding2
             return ComplexHRERE(**kwargs)
-        elif "real" in self.model_name:
+        elif "real_hrere" in self.model_name:
             kwargs["entity_embedding"] = self.entity_embedding
             kwargs["relation_embedding"] = self.relation_embedding
             return RealHRERE(**kwargs)
