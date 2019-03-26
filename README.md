@@ -2,7 +2,7 @@
 
 Connecting Language and Knowledge with Heterogeneous Representations for Neural Relation Extraction
 
-Paper Published in NAACL 2019: [NFETC](https://arxiv.org/abs/1803.03378)
+Paper Published in NAACL 2019: [HRERE](https://arxiv.org/abs/1903.10126)
 
 ### Prerequisites
 
