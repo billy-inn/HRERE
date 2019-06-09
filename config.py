@@ -2,7 +2,7 @@
 # ---------------------- PATH ----------------------
 ROOT_PATH = "."
 DATA_PATH = "%s/data" % ROOT_PATH
-KG_PATH = "%s/kg" % ROOT_PATH
+KG_PATH = "%s/fb3m" % ROOT_PATH
 
 CHECKPOINT_DIR = "%s/checkpoint" % ROOT_PATH
 LOG_DIR = "%s/log" % ROOT_PATH

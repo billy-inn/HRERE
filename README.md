@@ -36,7 +36,7 @@ python preprocess.py -p -g
 
 ### Complex Embeddings
 
-Copy the fils in `./kg` to the data folder in [tensorflow-efe](https://github.com/billy-inn/tensorflow-efe) and run the following commands to obtain the complex embeddings:
+Copy the fils in `./fb3m` to the data folder in [tensorflow-efe](https://github.com/billy-inn/tensorflow-efe) and run the following commands to obtain the complex embeddings:
 
 ```
 python preprocess.py --data fb3m
@@ -44,7 +44,7 @@ python train.py --model best_Complex_tanh_fb3m --data fb3m --save
 python get_embeddings.py --embed complex --model best_Complex_tanh_fb3m --output <repo_path>/kg
 ```
 
-Then copy `e2id.txt` and `r2id.txt` in the `tensorflow-efe/data/fb3m` to `./kg` and run the following command:
+Then copy `e2id.txt` and `r2id.txt` in the `tensorflow-efe/data/fb3m` to `./fb3m` and run the following command:
 
 ```
 python get_embeddings.py 
