@@ -41,7 +41,7 @@ Copy the fils in `./fb3m` to the data folder in [tensorflow-efe](https://github.
 ```
 python preprocess.py --data fb3m
 python train.py --model best_Complex_tanh_fb3m --data fb3m --save
-python get_embeddings.py --embed complex --model best_Complex_tanh_fb3m --output <repo_path>/kg
+python get_embeddings.py --embed complex --model best_Complex_tanh_fb3m --output <repo_path>/fb3m
 ```
 
 Then copy `e2id.txt` and `r2id.txt` in the `tensorflow-efe/data/fb3m` to `./fb3m` and run the following command:
@@ -61,11 +61,20 @@ python task.py --model <model_name> --eval <max_number_of_search> --runs <number
 ### Evaluation
 
 ```
-python eval.py --model <model_name> --prefix <file_prefix> --runs <number_of_runs> [--eval]
+python eval.py --model <model_name> --prefix <file_prefix> --runs <number_of_runs>
 ```
 
 `model_name` can be found in `model_param_space.py`.
-Option `--eval` is used to save the data for plotting; otherwise, it'll run multiple times and calculate the means and stds of P@N. 
+Run multiple times and calculate the means and stds of P@N which are logged in `./log`.
+The predicted probabilities and labels of the first run are stored in `plot/output` for plotting PR curves.
+
+### Results
+
+![Curve](plot/figure/comparsion.png)
+
+After replicating the results, we find that the results on P@N(%) reported in the paper seem to be a bit over-optimisitic due to the variance.
+According our replicating based on 5 runs (`./log/replication.log`), the results are P@10% (0.849 +- 0.019), P@30% (0.728 +- 0.019), P@50% (0.636 +- 0.013) 
+We also report our scores to [NLP Progress](http://nlpprogress.com/english/relationship_extraction.html<Paste>) based on this.
 
 ### Cite
 

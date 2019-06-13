@@ -187,30 +187,38 @@ class Task:
             np.save(os.path.join(config.PLOT_OUT_DIR, prefix + "_probs.npy"), probs)
         return average_precision, p10, p30, p50
 
-    def refit(self, prefix=""):
-        self.logger.info("Params")
-        self._print_param_dict(self.params_dict)
-        self.logger.info("Evaluation for each epoch")
-        self.logger.info("\t\tEpoch\t\tAP\t\tAcc\t\tP@10%\t\tP@30%\t\tP@50%")
+    def refit(self, prefix="", if_save=False):
+        # self.logger.info("Params")
+        # self._print_param_dict(self.params_dict)
+        # self.logger.info("Evaluation for each epoch")
+        # self.logger.info("\t\tEpoch\t\tAP\t\tAcc\t\tP@10%\t\tP@30%\t\tP@50%")
 
         sess = self.create_session()
         sess.run(tf.global_variables_initializer())
         epochs = 0
-        best_ap = 0.0
-        best_labels = None
-        best_probs = None
+        # best_ap = 0.0
+        # best_labels = None
+        # best_probs = None
+        probs_list = []
         for labels, probs, acc in self.model.evaluate(sess, self.full_set, self.test_set):
             epochs += 1
-            ap, p10, p30, p50 = self.get_scores(labels, probs)
-            self.logger.info("\t\t%d\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f" %
-                    (epochs, ap, acc, p10, p30, p50))
-            if best_ap < ap:
-                best_ap = ap
-                best_labels = labels
-                best_probs = probs
-        self.model.save_preds(sess, self.test_set)
-        self.get_scores(best_labels, best_probs, True, prefix)
+            # ap, p10, p30, p50 = self.get_scores(labels, probs)
+            # self.logger.info("\t\t%d\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f" %
+            #         (epochs, ap, acc, p10, p30, p50))
+            # if best_ap < ap:
+            #     best_ap = ap
+            #     best_labels = labels
+            #     best_probs = probs
+            probs_list.append(probs_list)
+        if len(probs_list) > 5:
+            probs_list = probs_list[-5:]
+        probs = np.mean(np.vstack(probs_list), axis=0)
+        ap, p10, p30, p50 = self.get_scores(labels, probs)
+        if if_save:
+            self.model.save_preds(sess, self.test_set)
+            self.get_scores(labels, probs, True, prefix)
         sess.close()
+        return ap, p10, p30, p50
 
     def evaluate(self, prefix=""):
         self.logger.info("Params")
@@ -218,29 +226,27 @@ class Task:
         self.logger.info("Final Evaluation")
         self.logger.info("-" * 50)
 
-        probs_list = []
         aps = []
         p10s = []
         p30s = []
         p50s = []
         for i in range(self.runs):
-            sess = self.create_session()
-            sess.run(tf.global_variables_initializer())
-            self.model.fit(sess, self.full_set)
-            labels, probs, acc = self.model.predict(sess, self.test_set)
-            if i == 0:
-                self.model.save_preds(sess, self.test_set)
-            ap, p10, p30, p50 = self.get_scores(labels, probs)
-            sess.close()
+            # sess = self.create_session()
+            # sess.run(tf.global_variables_initializer())
+            # self.model.fit(sess, self.full_set)
+            # labels, probs, acc = self.model.predict(sess, self.test_set)
+            # if i == 0:
+            #     self.model.save_preds(sess, self.test_set)
+            # ap, p10, p30, p50 = self.get_scores(labels, probs)
+            # sess.close()
+            ap, p10, p30, p50 = self.refit(prefix, i == 0)
 
-            probs_list.append(probs)
             aps.append(ap)
             p10s.append(p10)
             p30s.append(p30)
             p50s.append(p50)
 
             self.logger.info("PR curve area: %.3f" % ap)
-            self.logger.info("Accuracy: %.3f" % acc)
             self.logger.info("P@10%%: %.3f" % p10)
             self.logger.info("P@30%%: %.3f" % p30)
             self.logger.info("P@50%%: %.3f" % p50)
