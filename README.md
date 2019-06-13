@@ -64,17 +64,17 @@ python task.py --model <model_name> --eval <max_number_of_search> --runs <number
 python eval.py --model <model_name> --prefix <file_prefix> --runs <number_of_runs>
 ```
 
-`model_name` can be found in `model_param_space.py`.
-Run multiple times and calculate the means and stds of P@N which are logged in `./log`.
+`model_name` can be found in `model_param_space.py`. To replicate our results, use `best_complex_hrere` as the `model_name`.
+It will run the model multiple times and calculate the means and stds of P@N which are logged in `./log`.
 The predicted probabilities and labels of the first run are stored in `plot/output` for plotting PR curves.
 
 ### Results
 
-![Curve](plot/figure/comparsion.png)
+![Curve](plot/figure/comparison.png)
 
 After replicating the results, we find that the results on P@N(%) reported in the paper seem to be a bit over-optimisitic due to the variance.
-According our replicating based on 5 runs (`./log/replication.log`), the results are P@10% (0.849 +- 0.019), P@30% (0.728 +- 0.019), P@50% (0.636 +- 0.013) 
-We also report our scores to [NLP Progress](http://nlpprogress.com/english/relationship_extraction.html<Paste>) based on this.
+According our replication based on 5 runs (`./log/replication.log`), the results are P@10% (0.849 +- 0.019), P@30% (0.728 +- 0.019), P@50% (0.636 +- 0.013) 
+We also report our scores to [NLP Progress](http://nlpprogress.com/english/relationship_extraction.html<Paste>) based on this replication.
 
 ### Cite
 
