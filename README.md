@@ -36,7 +36,7 @@ python preprocess.py -p -g
 
 ### Complex Embeddings
 
-Copy the fils in `./fb3m` to the data folder in [tensorflow-efe](https://github.com/billy-inn/tensorflow-efe) and run the following commands to obtain the complex embeddings:
+Copy the directory `./fb3m` in the `data` folder in [tensorflow-efe](https://github.com/billy-inn/tensorflow-efe) and run the following commands to obtain the complex embeddings:
 
 ```
 python preprocess.py --data fb3m
