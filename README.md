@@ -73,8 +73,8 @@ The predicted probabilities and labels of the first run are stored in `plot/outp
 ![Curve](plot/figure/comparison.png)
 
 After replicating the results, we find that the results on P@N(%) reported in the paper seem to be a bit over-optimisitic due to the variance.
-According our replication based on 5 runs (`./log/replication.log`), the results are P@10% (0.849 +- 0.019), P@30% (0.728 +- 0.019), P@50% (0.636 +- 0.013) 
-We also report our scores to [NLP Progress](http://nlpprogress.com/english/relationship_extraction.html<Paste>) based on this replication.
+According our replication based on 5 runs (`./log/replication.log`), the results are P@10% (0.849 +- 0.019), P@30% (0.728 +- 0.019), P@50% (0.636 +- 0.013).
+We also report our scores to [NLP Progress](http://nlpprogress.com/english/relationship_extraction.html) based on this replication.
 
 ### Cite
 
