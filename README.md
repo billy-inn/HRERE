@@ -81,7 +81,7 @@ We also report our scores to [NLP Progress](http://nlpprogress.com/english/relat
 If you found this codebase or our work useful, please cite:
 
 ```
-@InProceddings{xu2019connecting,
+@InProceedings{xu2019connecting,
   author = {Xu, Peng and Barbosa, Denilson},
   title = {Connecting Language and Knowledge with Heterogeneous Representations for Neural Relation Extraction}
   booktitle = {The 17th Annual Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL 2019)},
